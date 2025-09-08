@@ -110,11 +110,3 @@
 
 </body>
 </html>
-
-echo "# Tugas8" >> README.md
-git init
-git add .
-git commit -m "first commit"
-git branch -M main
-git remote add origin git@github.com:aliya100272/Tugas8.git
-git push -u origin main
