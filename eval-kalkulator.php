@@ -1,76 +1,98 @@
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kalkulator Flat Minimalis</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body {
-      background: #f0f2f5;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    .calc-box {
-      background: #fff;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0px 5px 15px rgba(0,0,0,0.2);
-      width: 340px;
-    }
-    .display {
-      background: #222;
-      color: #0f0;
-      font-size: 28px;
-      text-align: right;
-      padding: 15px;
-      border-radius: 10px;
-      margin-bottom: 15px;
-      font-family: monospace;
-      height: 60px;
-    }
-    .btn-calc {
-      width: 70px;
-      height: 60px;
-      font-size: 20px;
-      margin: 5px;
-      border-radius: 10px;
-    }
-  </style>
+    <title>Kalkulator Eval PHP</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f1f1f1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: #222;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.3);
+            width: 300px;
+        }
+        h2 {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            font-size: 1.1em;
+            border-radius: 8px;
+            border: none;
+        }
+        input, select {
+            background: #333;
+            color: #fff;
+        }
+        button {
+            background: #007aff;
+            color: #fff;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #3399ff;
+        }
+        .hasil {
+            margin-top: 15px;
+            padding: 10px;
+            background: #000;
+            color: #0f0;
+            font-size: 1.2em;
+            text-align: center;
+            border-radius: 8px;
+        }
+        .error {
+            color: red;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <h2>Kalkulator (Versi Eval)</h2>
+        <form method="post" action="">
+            <input type="number" name="angka1" placeholder="Masukkan angka pertama" required>
+            <select name="operator">
+                <option value="+">+</option>
+                <option value="-">−</option>
+                <option value="*">×</option>
+                <option value="/">÷</option>
+            </select>
+            <input type="number" name="angka2" placeholder="Masukkan angka kedua" required>
+            <button type="submit" name="hitung">Hitung</button>
+        </form>
 
-<div class="calc-box">
-  <h5 class="text-center mb-3">🧮 Kalkulator Eval</h5>
-  <form method="post">
-    <input type="text" name="expr" class="form-control mb-3 text-end" placeholder="Contoh: 12+7*3" required>
-    <div class="d-flex flex-wrap justify-content-center">
-      <button type="submit" class="btn btn-primary w-100 mb-2">Hitung</button>
+        <?php
+        if (isset($_POST['hitung'])) {
+            $angka1 = $_POST['angka1'];
+            $angka2 = $_POST['angka2'];
+            $operator = $_POST['operator'];
+
+            // Buat ekspresi string (contoh: "5+3")
+            $ekspresi = $angka1 . $operator . $angka2;
+
+            try {
+                // Evaluasi ekspresi dengan eval()
+                eval("\$hasil = $ekspresi;");
+                echo "<div class='hasil'>$ekspresi = $hasil</div>";
+            } catch (Throwable $e) {
+                echo "<div class='error'>Terjadi kesalahan perhitungan</div>";
+            }
+        }
+        ?>
     </div>
-  </form>
-
-  <?php
-  if (isset($_POST['expr'])) {
-      $expr = $_POST['expr'];
-
-      // Validasi hanya angka dan operator dasar
-      if (preg_match('/^[0-9+\-*/(). ]+$/', $expr)) {
-          try {
-              eval("\$hasil = $expr;");
-              echo "<div class='display'>$hasil</div>";
-          } catch (Throwable $e) {
-              echo "<div class='display text-danger'>Error</div>";
-          }
-      } else {
-          echo "<div class='display text-danger'>Input tidak valid!</div>";
-      }
-  } else {
-      echo "<div class='display'>0</div>";
-  }
-  ?>
-</div>
-
 </body>
 </html>
