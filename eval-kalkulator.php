@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Kalkulator Eval PHP</title>
+    <title>Kalkulator Eval </title>
     <style>
         body {
             font-family: Arial, sans-serif;
